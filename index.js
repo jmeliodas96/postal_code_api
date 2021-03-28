@@ -25,22 +25,11 @@ app.listen(5000, () => {
 		bulk = collection.initializeUnorderedBulkOp();
 		db = database;
 		// $** allow search for all fields
-		// "$**": "text",
     	const result = await collection.createIndex(
     		{  "$**": "text" },
-    		// { weights: { Deparment: 80, Municipality: 80, Postal_code: 80, Neighbourhood: 80} },
     		{ default_language: "spanish" }
     	);
-
-		// collection.createIndexes(
-		// 	{
-		// 		 Deparment: "text"
-		// 	},
-		// 	function(err, indexname) {
-		// 		assert.equal(null, err);
-		// 	}
-		// );
-		console.log("Connected to `" + result + "`!");
+		console.log("Hii Nativo Software, you are connected to `" + DATABASE_NAME + "`!");
 		// perform actions on the collection object
 		// client.close();
 	});
@@ -73,36 +62,16 @@ app.get("/insertPostalCodes", async (request, response) => {
 });
 
 app.post("/search", (request, response) => {
-	
-	// "$or": [ { "Deparment": request.query.param } ],
 	const query = {
 		"$text": {
-	      	"$search": request.query.param
-	    }  	
+      		"$search": request.query.param
+    	}  	
 	};
-	
-	const projection = { "Deparment": 1};
-
-	// var phrase = "\\\"" +  request.query.param + "\\\"";
-	// collection.find({ searchkey: {$regex: request.query.param, $options: "$i"}})
-	// collection.find(query)
-	// .toArray(
-	// 	function(err, result) {
-	// 		if (err){
-	// 			console.log("error > " , err);
-	// 			return response.status(500).send(err);
-	// 		} 
-	// 		console.log("result > ", result);
-	// 		response.send(result);
-	// 	});
-	// });
-
 	collection.find(query).toArray(function(error, documents) {
 	    if (error) throw error;
 
 	    response.send(documents);
 	});
-
 });
 
 
