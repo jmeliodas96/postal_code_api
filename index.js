@@ -4,7 +4,7 @@ const cheerio = require("cheerio");
 const MongoClient = require('mongodb').MongoClient;
 const Express = require("express");
 const BodyParser = require("body-parser");
-const uri = process.env.DB_URL_ROOT + encodeURI(process.env.DB_PASS) +"@cluster0.6nhzo.mongodb.net/" + encodeURI(process.env.DB_COLLECTION_NAME) + "?retryWrites=true&w=majority";
+const uri = "mongodb+srv://admin:" + encodeURI(process.env.DB_PASS) +"@cluster0.6nhzo.mongodb.net/" + encodeURI(process.env.DB_COLLECTION_NAME) + "?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const DATABASE_NAME = process.env.DB_NAME;
 var db;  
@@ -61,9 +61,6 @@ app.get("/insertPostalCodes", async (request, response) => {
 	} catch (error) {
 		console.log(error);
 	}
-
-
-  
 });
 
 app.post("/search", (request, response) => {
