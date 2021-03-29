@@ -17,12 +17,12 @@ var database, collection, bulk;
 
 
 app.listen(5000, () => {
-	client.connect( async (err, database) => {
+	client.connect( (err, database) => {
 		collection = client.db("postal_codes_nicaragua").collection("postal_codes_Nicaragua");
 		bulk = collection.initializeUnorderedBulkOp();
 		db = database;
 		// $** allow search for all fields
-    	const result = await collection.createIndex(
+    	const result = collection.createIndex(
     		{  "$**": "text" },
     		{ default_language: "spanish" }
     	);
