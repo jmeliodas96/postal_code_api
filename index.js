@@ -28,34 +28,42 @@ app.listen(5000, () => {
     	);
 		console.log("Hii Nativo Software, you are connected to `" + DATABASE_NAME + "`!");
 		// perform actions on the collection object
-		client.close();
+		// client.close();
 	});
 });
 
 app.get("/insertPostalCodes", async (request, response) => {
-    const postal_codes = await getPostalCodesFromWeb();
-	const $ = cheerio.load(postal_codes);
-	const scrapedData = [];
+	try {
+		const postal_codes = await getPostalCodesFromWeb();
+		const $ = cheerio.load(postal_codes);
+		const scrapedData = [];
  
-	$("#mw-content-text > div > table > tbody > tr").each( (index, element) => {
-		if (index === 0) return true;
-		const tds = $(element).find("td");
-		const Deparment = $(tds[0]).text().replace(/\n/g, '');
-		const Municipality = $(tds[1]).text().replace(/\n/g, '');
-		const Postal_code = $(tds[2]).text().replace(/\n/g, '');
-		const Neighbourhood = $(tds[3]).text().replace(/\n/g, '');
-		// Build Object and insert collection
-        const tableRow = { Deparment, Municipality, Postal_code, Neighbourhood };
-    	scrapedData.push(tableRow);
-	});
+		$("#mw-content-text > div > table > tbody > tr").each( (index, element) => {
+			if (index === 0) return true;
+			const tds = $(element).find("td");
+			const Deparment = $(tds[0]).text().replace(/\n/g, '');
+			const Municipality = $(tds[1]).text().replace(/\n/g, '');
+			const Postal_code = $(tds[2]).text().replace(/\n/g, '');
+			const Neighbourhood = $(tds[3]).text().replace(/\n/g, '');
+			// Build Object and insert collection
+	        const tableRow = { Deparment, Municipality, Postal_code, Neighbourhood };
+	    	scrapedData.push(tableRow);
+		});
 		
-	collection.insert( scrapedData , (error, result) => {       
-		console.log(error); 
-		if(error) {
-			return response.status(500).send(error);
-		}
-	    response.send(result.result);
-	});
+		collection.insert( scrapedData , (error, result) => {       
+			console.log(error); 
+			if(error) {
+				return response.status(500).send(error);
+			}
+		    response.send(result.result);
+		});
+		
+	} catch (error) {
+		console.log(error);
+	}
+
+
+  
 });
 
 app.post("/search", (request, response) => {
