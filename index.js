@@ -62,7 +62,7 @@ app.get("/insertPostalCodes", async (request, response) => {
 	});
 });
 
-app.post("/search", (request, response) => {
+app.get("/search", (request, response) => {
 	const query = {
 		"$text": {
       		"$search": request.query.param
