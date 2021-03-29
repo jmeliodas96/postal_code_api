@@ -28,7 +28,7 @@ app.listen(5000, () => {
     	);
 		console.log("Hii Nativo Software, you are connected to `" + DATABASE_NAME + "`!");
 		// perform actions on the collection object
-		// client.close();
+		client.close();
 	});
 });
 
