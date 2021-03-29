@@ -1,12 +1,19 @@
-require('dotenv').config();
+// require('dotenv').config();
 const request = require("request-promise");
 const cheerio = require("cheerio");
 const MongoClient = require('mongodb').MongoClient;
 const Express = require("express");
 const BodyParser = require("body-parser");
-const uri = "mongodb+srv://admin:" + encodeURI(process.env.DB_PASS) +"@cluster0.6nhzo.mongodb.net/" + encodeURI(process.env.DB_COLLECTION_NAME) + "?retryWrites=true&w=majority";
+
+const uri = "mongodb+srv://admin:" + 'DB_PASS' +"@cluster0.6nhzo.mongodb.net/" + 'DB_COLLECTION_NAME' + "?retryWrites=true&w=majority";
+
+// const uri = "mongodb+srv://admin:" + encodeURI(process.env.DB_PASS) +"@cluster0.6nhzo.mongodb.net/" + encodeURI(process.env.DB_COLLECTION_NAME) + "?retryWrites=true&w=majority";
+
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-const DATABASE_NAME = process.env.DB_NAME;
+const DATABASE_NAME = 'DB_NAME';
+// const DATABASE_NAME = process.env.DB_NAME;
+
 var db;  
 var assert = require('assert');  
 var util=require('util');
