@@ -82,5 +82,9 @@ app.post("/search", (request, response) => {
 
 
 async function getPostalCodesFromWeb() {
- 	return await request.get("https://en.wikipedia.org/wiki/Postal_codes_in_Nicaragua");
+	try {
+	 	return await request.get("https://en.wikipedia.org/wiki/Postal_codes_in_Nicaragua");
+	} catch (error){
+		console.log(error);
+	}
 }
